@@ -10,7 +10,13 @@ function init() {
         .text(sample)
         .property("value", sample);
     });
-})}
+    
+    var firstSample = sampleNames[0];
+    buildCharts(firstSample);
+    buildMetadata(firstSample);
+    console.log(sampleNames[0])
+  });
+}
 
 init();
 
@@ -24,9 +30,12 @@ function buildMetadata(sample) {
     var metadata = data.metadata;
     var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
     var result = resultArray[0];
+    console.log("metadata_result:", result)
     var PANEL = d3.select("#sample-metadata");
 
     PANEL.html("");
-    PANEL.append("h6").text(result.location);
+    Object.entries(result).forEach(([key, value]) => {
+      PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
   });
+});
 }
